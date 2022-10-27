@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { auth } from '../../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 // material-ui
 import {
     Button,
     Checkbox,
-    Divider,
     FormControlLabel,
     FormHelperText,
     Grid,
@@ -23,7 +23,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project import
-import FirebaseSocial from './FirebaseSocial';
+// import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
@@ -38,7 +38,7 @@ const AuthLogin = () => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
+    const navigate = useNavigate();
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
@@ -59,6 +59,23 @@ const AuthLogin = () => {
                     try {
                         setStatus({ success: false });
                         setSubmitting(false);
+                        signInWithEmailAndPassword(auth, values.email, values.password)
+                            .then(() => {
+                                navigate('/');
+                            })
+                            .catch((error) => {
+                                switch (error.code) {
+                                    case 'auth/wrong-password':
+                                        alert('Wrong password');
+                                        break;
+                                    case 'auth/user-not-found':
+                                        alert('Email cannot be found');
+                                        break;
+                                    default:
+                                        alert('Some error occured');
+                                        break;
+                                }
+                            });
                     } catch (err) {
                         setStatus({ success: false });
                         setErrors({ submit: err.message });

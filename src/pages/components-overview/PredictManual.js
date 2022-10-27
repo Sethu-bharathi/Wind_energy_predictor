@@ -1,13 +1,101 @@
-// material-ui
-import { Breadcrumbs, Divider, Grid, Link, Stack, Typography } from '@mui/material';
-
 // project import
-import AuthLogin from '../authentication/auth-forms/AuthLogin';
 import AuthWrapper from '../authentication/AuthWrapper';
 import ComponentSkeleton from './ComponentSkeleton';
 import MainCard from 'components/MainCard';
 
 // ==============================|| COMPONENTS - PREDCTING MANUALLY||============================== //
+
+import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+
+// material-ui
+import {
+    Button,
+    Checkbox,
+    Divider,
+    FormControlLabel,
+    FormHelperText,
+    Grid,
+    Link,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    Stack,
+    Typography
+} from '@mui/material';
+
+// third party
+import { Formik } from 'formik';
+
+import AnimateButton from 'components/@extended/AnimateButton';
+
+// ============================|| FIREBASE - LOGIN ||============================ //
+
+const PredictManual = () => {
+    const [checked, setChecked] = useState(false);
+    const [windSpeed, setwindSpeed] = useState('');
+    const [windDirection, setwindDirection] = useState('');
+    const handleSubmit = (e) => {
+        console.log(windDirection, windSpeed);
+        e.preventDefault();
+    };
+    return (
+        <>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: '',
+                    submit: null
+                }}
+            >
+                <form noValidate onSubmit={handleSubmit}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor="email-login">Wind Speed</InputLabel>
+                                <OutlinedInput
+                                    id="email-login"
+                                    type="email"
+                                    value={windSpeed}
+                                    name="email"
+                                    onChange={(e) => {
+                                        setwindSpeed(e.target.value);
+                                    }}
+                                    placeholder="Enter Wind Speed"
+                                    fullWidth
+                                />
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Stack spacing={1}>
+                                <InputLabel htmlFor="password-login">Wind direction</InputLabel>
+                                <OutlinedInput
+                                    id="password-login"
+                                    type="string"
+                                    value={windDirection}
+                                    name="wind direction"
+                                    onChange={(e) => {
+                                        setwindDirection(e.target.value);
+                                    }}
+                                    placeholder={'Enter Wind Direction'}
+                                />
+                            </Stack>
+                        </Grid>
+
+                        <Grid item xs={12} alignSelf="center">
+                            <AnimateButton>
+                                <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="primary">
+                                    Predict
+                                </Button>
+                            </AnimateButton>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Formik>
+        </>
+    );
+};
 
 const ComponentTypography = () => (
     <ComponentSkeleton>
@@ -15,14 +103,11 @@ const ComponentTypography = () => (
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
-                        <Typography variant="h3">Login</Typography>
-                        <Typography component={Link} to="/register" variant="body1" sx={{ textDecoration: 'none' }} color="primary">
-                            Don&apos;t have an account?
-                        </Typography>
+                        <Typography variant="h3">Power Prediction</Typography>
                     </Stack>
                 </Grid>
                 <Grid item xs={12}>
-                    <AuthLogin />
+                    <PredictManual />
                 </Grid>
             </Grid>
         </AuthWrapper>

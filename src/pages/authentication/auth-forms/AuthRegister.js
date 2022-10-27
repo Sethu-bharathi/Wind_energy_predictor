@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebase';
 // material-ui
 import {
     Box,
     Button,
-    Divider,
     FormControl,
     FormHelperText,
     Grid,
@@ -23,7 +23,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project import
-import FirebaseSocial from './FirebaseSocial';
+// import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
@@ -38,7 +38,7 @@ const AuthRegister = () => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
+    const navigate = useNavigate();
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
@@ -66,12 +66,25 @@ const AuthRegister = () => {
                     firstname: Yup.string().max(255).required('First Name is required'),
                     lastname: Yup.string().max(255).required('Last Name is required'),
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    password: Yup.string().min(6).required('Password is required')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
                         setStatus({ success: false });
                         setSubmitting(false);
+                        createUserWithEmailAndPassword(auth, values.email, values.password)
+                            .then(() => {
+                                navigate('/');
+                            })
+                            .catch((error) => {
+                                console.log('code', error.code);
+                                console.log('message', error.message);
+                                switch (error.code) {
+                                    case 'auth/email-already-in-use':
+                                        alert('Email already in use !');
+                                        break;
+                                }
+                            });
                     } catch (err) {
                         console.error(err);
                         setStatus({ success: false });
