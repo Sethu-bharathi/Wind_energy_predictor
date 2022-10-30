@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth } from '../../../firebase';
 // material-ui
 import {
@@ -73,11 +73,19 @@ const AuthRegister = () => {
                         setStatus({ success: false });
                         setSubmitting(false);
                         createUserWithEmailAndPassword(auth, values.email, values.password)
-                            .then(() => {
-                                navigate('/');
+                            .then((userCredential) => {
+                                console.log('user', userCredential.user);
+                                sendEmailVerification(userCredential.user)
+                                    .then(() => {
+                                        auth.signOut();
+                                        alert('Email sent');
+                                        navigate('/login');
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                    });
                             })
                             .catch((error) => {
-                                console.log('code', error.code);
                                 console.log('message', error.message);
                                 switch (error.code) {
                                     case 'auth/email-already-in-use':

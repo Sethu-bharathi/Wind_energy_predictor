@@ -1,29 +1,13 @@
 // project import
-import AuthWrapper from '../authentication/AuthWrapper';
-import ComponentSkeleton from './ComponentSkeleton';
-import MainCard from 'components/MainCard';
+import AuthWrapper from './PredictWrapper';
+import ComponentSkeleton from '../ComponentSkeleton';
 
 // ==============================|| COMPONENTS - PREDCTING MANUALLY||============================== //
 
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
-import {
-    Button,
-    Checkbox,
-    Divider,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    Link,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    Stack,
-    Typography
-} from '@mui/material';
+import { Button, Grid, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 
 // third party
 import { Formik } from 'formik';
@@ -33,7 +17,6 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const PredictManual = () => {
-    const [checked, setChecked] = useState(false);
     const [windSpeed, setwindSpeed] = useState('');
     const [windDirection, setwindDirection] = useState('');
     const handleSubmit = (e) => {

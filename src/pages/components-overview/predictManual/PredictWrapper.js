@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Box, Grid } from '@mui/material';
 
 // project import
-import AuthCard from './AuthCard';
-import logo from 'assets/images/icons/turbinehut- 70 white.svg';
+import Logo from 'components/Logo';
 import AuthFooter from 'components/cards/AuthFooter';
 
 // assets
@@ -13,20 +12,48 @@ import AuthBackground from 'assets/images/auth/AuthBackground';
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
+import MainCard from 'components/MainCard';
+
+// ==============================|| AUTHENTICATION - CARD WRAPPER ||============================== //
+
+const AuthCard = ({ children, ...other }) => (
+    <MainCard
+        sx={{
+            maxWidth: { xs: 400, lg: 475 },
+            margin: { xs: 2.5, md: 3 },
+            '& > *': {
+                flexGrow: 1,
+                flexBasis: '50%'
+            }
+        }}
+        content={false}
+        {...other}
+        border={false}
+        boxShadow
+        shadow={(theme) => theme.customShadows.z1}
+    >
+        <Box sx={{ p: { xs: 2, sm: 3, md: 4, xl: 5 } }}>{children}</Box>
+    </MainCard>
+);
+
+AuthCard.propTypes = {
+    children: PropTypes.node
+};
+
 const AuthWrapper = ({ children }) => (
-    <Box sx={{ minHeight: '100vh' }}>
-        <AuthBackground />
+    <Box
+        sx={{
+            minHeight: '85vh'
+        }}
+    >
         <Grid
             container
             direction="column"
             justifyContent="flex-end"
             sx={{
-                minHeight: '100vh'
+                minHeight: '85vh'
             }}
         >
-            <Grid item xs={12} sx={{ ml: { xs: 2, md: 3 }, mt: 3 }}>
-                <img src={logo} alt="Turbine Hut" width="118" />
-            </Grid>
             <Grid item xs={12}>
                 <Grid
                     item
@@ -34,15 +61,12 @@ const AuthWrapper = ({ children }) => (
                     container
                     justifyContent="center"
                     alignItems="center"
-                    sx={{ minHeight: { xs: 'calc(100vh - 164px)', md: 'calc(100vh - 144px)' } }}
+                    sx={{ minHeight: { xs: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
                 >
                     <Grid item>
                         <AuthCard>{children}</AuthCard>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid item xs={12} sx={{ m: 3 }}>
-                <AuthFooter />
             </Grid>
         </Grid>
     </Box>

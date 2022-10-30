@@ -100,6 +100,7 @@ const DashboardDefault = () => {
                     <Grid item>
                         <Typography variant="h5">Unique Visitor</Typography>
                     </Grid>
+                    IncomeAreaChart
                     <Grid item>
                         <Stack direction="row" alignItems="center" spacing={0}>
                             <Button

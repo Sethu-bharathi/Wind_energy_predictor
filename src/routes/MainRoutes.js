@@ -11,7 +11,7 @@ const Dashboard = Loadable(lazy(() => import('pages/dashboard')));
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 
 // render - utilities
-const PredictManual = Loadable(lazy(() => import('pages/components-overview/PredictManual')));
+const PredictManual = Loadable(lazy(() => import('pages/components-overview/predictManual/index')));
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));

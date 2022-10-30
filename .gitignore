@@ -109,3 +109,6 @@ dist
 #output
 build
 firebase.js
+.firebase
+.firebaserc
+firebase.json
