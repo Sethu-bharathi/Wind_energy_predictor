@@ -21,6 +21,7 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 
 // project import
 // import FirebaseSocial from './FirebaseSocial';
@@ -28,6 +29,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import options from 'menu-items/toastOptions';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -60,19 +62,25 @@ const AuthLogin = () => {
                         setStatus({ success: false });
                         setSubmitting(false);
                         signInWithEmailAndPassword(auth, values.email, values.password)
-                            .then(() => {
-                                navigate('/');
+                            .then((userCredential) => {
+                                if (userCredential.user.emailVerified) {
+                                    toast.success('Login Success!', options);
+                                    navigate('/');
+                                } else {
+                                    toast.error('Verify your Email', options);
+                                }
                             })
                             .catch((error) => {
                                 switch (error.code) {
                                     case 'auth/wrong-password':
-                                        alert('Wrong password');
+                                        toast.error('Wrong password', options);
                                         break;
                                     case 'auth/user-not-found':
-                                        alert('Email cannot be found');
+                                        toast.error('Email cannot be found', options);
                                         break;
                                     default:
-                                        alert('Some error occured');
+                                        console.log(error);
+                                        toast.error('Some error occured', options);
                                         break;
                                 }
                             });

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth } from '../../../firebase';
+
 // material-ui
 import {
     Box,
@@ -21,6 +22,7 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 
 // project import
 // import FirebaseSocial from './FirebaseSocial';
@@ -29,6 +31,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import options from 'menu-items/toastOptions';
 
 // ============================|| FIREBASE - REGISTER ||============================ //
 
@@ -51,7 +54,6 @@ const AuthRegister = () => {
     useEffect(() => {
         changePassword('');
     }, []);
-
     return (
         <>
             <Formik
@@ -78,7 +80,7 @@ const AuthRegister = () => {
                                 sendEmailVerification(userCredential.user)
                                     .then(() => {
                                         auth.signOut();
-                                        alert('Email sent');
+                                        toast.success('Email sent\n Kindly check your spam Folder', options);
                                         navigate('/login');
                                     })
                                     .catch((err) => {
@@ -89,7 +91,7 @@ const AuthRegister = () => {
                                 console.log('message', error.message);
                                 switch (error.code) {
                                     case 'auth/email-already-in-use':
-                                        alert('Email already in use !');
+                                        toast.error('Email already in use !', options);
                                         break;
                                 }
                             });

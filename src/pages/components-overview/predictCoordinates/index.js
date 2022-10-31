@@ -18,24 +18,25 @@ import logo from 'assets/images/icons/turbinehut- 70.svg';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 const PredictManual = () => {
-    const [windSpeed, setwindSpeed] = useState('');
-    const [windDirection, setwindDirection] = useState('');
+    const [latitude, setlatitude] = useState('');
+    const [longitude, setlongitude] = useState('');
     const [isOutput, setisOutput] = useState(false);
     const [Output, setOutput] = useState('');
 
     const Predict = async () =>
         await toast.promise(
-            fetch('http://127.0.0.1:5000/predict-ws-and-wd', {
+            fetch('http://127.0.0.1:5000/predict-lat-and-lng', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    ws: windSpeed,
-                    wd: windDirection
+                    apikey: '9d06a0a080e7ce38d35803bca42e0e1c',
+                    lat: latitude,
+                    lng: longitude
                 })
             })
                 .then((res) => res.json())
                 .then((json) => {
-                    setOutput(json.result);
+                    setOutput(Math.abs(json.result));
                     setisOutput(true);
                 }),
             {
@@ -51,8 +52,8 @@ const PredictManual = () => {
     };
     const handleBack = (e) => {
         setisOutput(false);
-        setwindDirection('');
-        setwindSpeed('');
+        setlongitude('');
+        setlatitude('');
         e.preventDefault();
     };
     return (
@@ -69,32 +70,32 @@ const PredictManual = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="email-login">Wind Speed</InputLabel>
+                                    <InputLabel htmlFor="latitute">Latitude</InputLabel>
                                     <OutlinedInput
-                                        id="email-login"
-                                        type="email"
-                                        value={windSpeed}
+                                        id="latitute"
+                                        type="string"
+                                        value={latitude}
                                         name="email"
                                         onChange={(e) => {
-                                            setwindSpeed(e.target.value);
+                                            setlatitude(e.target.value);
                                         }}
-                                        placeholder="Enter Wind Speed"
+                                        placeholder="Enter Latitute"
                                         fullWidth
                                     />
                                 </Stack>
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="password-login">Wind direction</InputLabel>
+                                    <InputLabel htmlFor="longitude">Longitude</InputLabel>
                                     <OutlinedInput
-                                        id="password-login"
+                                        id="longitude"
                                         type="string"
-                                        value={windDirection}
+                                        value={longitude}
                                         name="wind direction"
                                         onChange={(e) => {
-                                            setwindDirection(e.target.value);
+                                            setlongitude(e.target.value);
                                         }}
-                                        placeholder={'Enter Wind Direction'}
+                                        placeholder={'Enter Longitude'}
                                     />
                                 </Stack>
                             </Grid>
@@ -121,12 +122,12 @@ const PredictManual = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={0}>
-                                    <InputLabel>Wind Speed - {windSpeed}</InputLabel>
+                                    <InputLabel>Latitude - {latitude}</InputLabel>
                                 </Stack>
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={0}>
-                                    <InputLabel>Wind Direction - {windDirection}</InputLabel>
+                                    <InputLabel>Longitude - {longitude}</InputLabel>
                                 </Stack>
                             </Grid>
                             <Grid item xs={12} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>

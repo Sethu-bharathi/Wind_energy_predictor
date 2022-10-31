@@ -20,7 +20,7 @@ const HeaderContent = () => {
 
             <IconButton
                 component={Link}
-                href="https://github.com/codedthemes/mantis-free-react-admin-template"
+                href="https://github.com/Sethu-bharathi/Wind_energy_predictor"
                 target="_blank"
                 disableRipple
                 color="secondary"

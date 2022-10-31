@@ -29,8 +29,9 @@ const utilities = {
             id: 'util-location',
             title: 'Predict Location',
             type: 'item',
-            url: '/shadow',
-            icon: icons.BarcodeOutlined
+            url: '/predictCoordinates',
+            icon: icons.BarcodeOutlined,
+            breadcrumbs: false
         },
         {
             id: 'predict-manual',
@@ -45,7 +46,8 @@ const utilities = {
             title: 'Compare Locations',
             type: 'item',
             url: '/color',
-            icon: icons.BgColorsOutlined
+            icon: icons.BgColorsOutlined,
+            breadcrumbs: false
         }
     ]
 };

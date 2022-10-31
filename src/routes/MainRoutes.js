@@ -14,7 +14,7 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const PredictManual = Loadable(lazy(() => import('pages/components-overview/predictManual/index')));
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
-const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
+const PredictCoordinates = Loadable(lazy(() => import('pages/components-overview/predictCoordinates')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -40,8 +40,8 @@ const MainRoutes = {
             element: <SamplePage />
         },
         {
-            path: 'shadow',
-            element: <Shadow />
+            path: 'PredictCoordinates',
+            element: <PredictCoordinates />
         },
         {
             path: 'typography',
