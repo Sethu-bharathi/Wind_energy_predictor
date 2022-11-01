@@ -45,7 +45,15 @@ const utilities = {
             id: 'util-compare-location',
             title: 'Compare Locations',
             type: 'item',
-            url: '/color',
+            url: '/compare-locations',
+            icon: icons.BgColorsOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'Predict-week',
+            title: 'Predict for Next week',
+            type: 'item',
+            url: '/predict-week',
             icon: icons.BgColorsOutlined,
             breadcrumbs: false
         }

@@ -12,10 +12,10 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 
 // render - utilities
 const PredictManual = Loadable(lazy(() => import('pages/components-overview/predictManual/index')));
-const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
+const CompareLocations = Loadable(lazy(() => import('pages/components-overview/compareLocations')));
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const PredictCoordinates = Loadable(lazy(() => import('pages/components-overview/predictCoordinates')));
-const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
+const PredictWeek = Loadable(lazy(() => import('pages/components-overview/predictWeek')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -44,16 +44,16 @@ const MainRoutes = {
             element: <PredictCoordinates />
         },
         {
-            path: 'typography',
-            element: <Typography />
+            path: 'compare-locations',
+            element: <CompareLocations />
         },
         {
             path: 'PredictManual',
             element: <PredictManual />
         },
         {
-            path: 'icons/ant',
-            element: <AntIcons />
+            path: 'predict-week',
+            element: <PredictWeek />
         }
     ]
 };
