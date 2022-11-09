@@ -155,10 +155,10 @@ export default function OrderTable(props) {
                                         </Link>
                                     </TableCell>
                                     <TableCell align="left">{row.Time + ':00'}</TableCell>
-                                    <TableCell align="left">{row.WindSpeed}</TableCell>
-                                    <TableCell align="left">{row.WindDirection}</TableCell>
+                                    <TableCell align="left">{row.WindSpeed + ' M/s'}</TableCell>
+                                    <TableCell align="left">{row.WindDirection + ' deg'}</TableCell>
                                     <TableCell align="right">
-                                        <NumberFormat value={row.WindPower} displayType="text" thousandSeparator suffix="$" />
+                                        <NumberFormat value={row.WindPower} displayType="text" thousandSeparator suffix=" KWatt" />
                                     </TableCell>
                                 </TableRow>
                             );

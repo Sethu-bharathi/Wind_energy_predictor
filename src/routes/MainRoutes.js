@@ -36,7 +36,7 @@ const MainRoutes = {
             element: <Dashboard />
         },
         {
-            path: 'sample-page',
+            path: 'Documentation',
             element: <SamplePage />
         },
         {

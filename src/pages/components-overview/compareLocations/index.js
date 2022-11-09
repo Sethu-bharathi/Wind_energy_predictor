@@ -20,8 +20,11 @@ import logo from 'assets/images/icons/turbinehut- 70.svg';
 const PredictManual = () => {
     const [latitude, setlatitude] = useState('');
     const [longitude, setlongitude] = useState('');
+    const [latitude2, setlatitude2] = useState('');
+    const [longitude2, setlongitude2] = useState('');
     const [isOutput, setisOutput] = useState(false);
     const [Output, setOutput] = useState('');
+    const [Output2, setOutput2] = useState('');
 
     const Predict = async () =>
         await toast.promise(
@@ -37,6 +40,19 @@ const PredictManual = () => {
                 .then((res) => res.json())
                 .then((json) => {
                     setOutput(Math.abs(json.result));
+                }),
+            fetch('http://127.0.0.1:5000/predict-lat-and-lng', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    apikey: '9d06a0a080e7ce38d35803bca42e0e1c',
+                    lat: latitude2,
+                    lng: longitude2
+                })
+            })
+                .then((res) => res.json())
+                .then((json) => {
+                    setOutput2(Math.abs(json.result));
                     setisOutput(true);
                 }),
             {
@@ -67,7 +83,8 @@ const PredictManual = () => {
                     }}
                 >
                     <form noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={3}>
+                        <Grid container spacing={2}>
+                            <h3 style={{ margin: '0 0 0 17px' }}>Location 1</h3>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
                                     <InputLabel htmlFor="latitute">Latitude</InputLabel>
@@ -99,7 +116,38 @@ const PredictManual = () => {
                                     />
                                 </Stack>
                             </Grid>
-
+                            <h3 style={{ margin: '20px 0 0 17px' }}>Location 2</h3>
+                            <Grid item xs={12}>
+                                <Stack spacing={1}>
+                                    <InputLabel htmlFor="latitute">Latitude</InputLabel>
+                                    <OutlinedInput
+                                        id="latitute"
+                                        type="string"
+                                        value={latitude2}
+                                        name="email"
+                                        onChange={(e) => {
+                                            setlatitude2(e.target.value);
+                                        }}
+                                        placeholder="Enter Latitute"
+                                        fullWidth
+                                    />
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Stack spacing={1}>
+                                    <InputLabel htmlFor="longitude">Longitude</InputLabel>
+                                    <OutlinedInput
+                                        id="longitude"
+                                        type="string"
+                                        value={longitude2}
+                                        name="wind direction"
+                                        onChange={(e) => {
+                                            setlongitude2(e.target.value);
+                                        }}
+                                        placeholder={'Enter Longitude'}
+                                    />
+                                </Stack>
+                            </Grid>
                             <Grid item xs={12} alignSelf="center">
                                 <AnimateButton>
                                     <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="primary">
@@ -114,7 +162,7 @@ const PredictManual = () => {
             {isOutput && (
                 <Formik>
                     <form noValidate onSubmit={handleBack}>
-                        <Grid container spacing={3}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Stack spacing={0}>
                                     <InputLabel>The Wind Power predicted for</InputLabel>
@@ -130,9 +178,32 @@ const PredictManual = () => {
                                     <InputLabel>Longitude - {longitude}</InputLabel>
                                 </Stack>
                             </Grid>
-                            <Grid item xs={12} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                            <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Stack spacing={0}>
                                     <InputLabel style={{ fontWeight: '700' }}>Wind Power - {Output}</InputLabel>
+                                </Stack>
+                            </Grid>
+                        </Grid>
+                        <br></br>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Stack spacing={0}>
+                                    <InputLabel>The Wind Power predicted for</InputLabel>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Stack spacing={0}>
+                                    <InputLabel>Latitude - {latitude2}</InputLabel>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Stack spacing={0}>
+                                    <InputLabel>Longitude - {longitude2}</InputLabel>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                                <Stack spacing={0}>
+                                    <InputLabel style={{ fontWeight: '700' }}>Wind Power - {Output2}</InputLabel>
                                 </Stack>
                                 <Stack spacing={0}>
                                     <img src={logo} alt="Turbine Hut" srcset="" width="118" />

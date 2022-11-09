@@ -1,10 +1,11 @@
 // project import
-import AuthWrapper from './PredictWrapper';
 import ComponentSkeleton from '../ComponentSkeleton';
 
+//Styles
+import './styles.css';
 // ==============================|| COMPONENTS - PREDCTING MANUALLY||============================== //
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // material-ui
 import { Button, Grid, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
@@ -15,8 +16,6 @@ import { toast } from 'react-toastify';
 import AnimateButton from 'components/@extended/AnimateButton';
 import options from 'menu-items/toastOptions';
 import OrderTable from './OrdersTable';
-import MainCard from 'components/MainCard';
-import ReportAreaChart from './ReportAreaChart';
 import SalesColumnChart from './SalesColumnChart';
 import MonthlyBarChart from './MonthlyBarChart';
 
@@ -25,7 +24,6 @@ const PredictManual = () => {
     const [latitude, setlatitude] = useState('');
     const [longitude, setlongitude] = useState('');
     const [isOutput, setisOutput] = useState(false);
-    const [Output, setOutput] = useState('');
     const [time, settime] = useState([]);
     const [windSpeed, setwindSpeed] = useState([]);
     const [windPower, setwindPower] = useState([]);
@@ -70,63 +68,72 @@ const PredictManual = () => {
     return (
         <>
             {!isOutput && (
-                <Formik
-                    initialValues={{
-                        email: '',
-                        password: '',
-                        submit: null
-                    }}
-                >
-                    <form noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <InputLabel htmlFor="latitute">Latitude</InputLabel>
-                                    <OutlinedInput
-                                        id="latitute"
-                                        type="string"
-                                        value={latitude}
-                                        name="email"
-                                        onChange={(e) => {
-                                            setlatitude(e.target.value);
-                                        }}
-                                        placeholder="Enter Latitute"
-                                        fullWidth
-                                    />
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack spacing={1}>
-                                    <InputLabel htmlFor="longitude">Longitude</InputLabel>
-                                    <OutlinedInput
-                                        id="longitude"
-                                        type="string"
-                                        value={longitude}
-                                        name="wind direction"
-                                        onChange={(e) => {
-                                            setlongitude(e.target.value);
-                                        }}
-                                        placeholder={'Enter Longitude'}
-                                    />
-                                </Stack>
-                            </Grid>
+                <div className="container">
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: '',
+                            submit: null
+                        }}
+                    >
+                        <form noValidate onSubmit={handleSubmit}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                    <Stack spacing={1}>
+                                        <InputLabel htmlFor="latitute">Latitude</InputLabel>
+                                        <OutlinedInput
+                                            id="latitute"
+                                            type="string"
+                                            value={latitude}
+                                            name="email"
+                                            onChange={(e) => {
+                                                setlatitude(e.target.value);
+                                            }}
+                                            placeholder="Enter Latitute"
+                                            fullWidth
+                                        />
+                                    </Stack>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Stack spacing={1}>
+                                        <InputLabel htmlFor="longitude">Longitude</InputLabel>
+                                        <OutlinedInput
+                                            id="longitude"
+                                            type="string"
+                                            value={longitude}
+                                            name="wind direction"
+                                            onChange={(e) => {
+                                                setlongitude(e.target.value);
+                                            }}
+                                            placeholder={'Enter Longitude'}
+                                        />
+                                    </Stack>
+                                </Grid>
 
-                            <Grid item xs={12} alignSelf="center">
-                                <AnimateButton>
-                                    <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="primary">
-                                        Predict
-                                    </Button>
-                                </AnimateButton>
+                                <Grid item xs={12} alignSelf="center">
+                                    <AnimateButton>
+                                        <Button disableElevation fullWidth size="large" type="submit" variant="contained" color="primary">
+                                            Predict
+                                        </Button>
+                                    </AnimateButton>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                </Formik>
+                        </form>
+                    </Formik>
+                </div>
             )}
             {isOutput && (
                 <div>
                     <OrderTable ws={windSpeed} wd={windDirection} wp={windPower} time={time} />
                     <SalesColumnChart ws={windSpeed} wd={windDirection} time={time} />
                     <MonthlyBarChart wp={windPower} time={time} />
+                    <div className="btn">
+                        <AnimateButton onSubmit={handleBack}>
+                            <Button disableElevation size="large" type="submit" variant="contained" color="primary">
+                                Go back
+                            </Button>
+                        </AnimateButton>
+                    </div>
                 </div>
             )}
         </>
@@ -137,7 +144,7 @@ const ComponentTypography = () => (
     <ComponentSkeleton>
         <Grid container spacing={3}>
             <Grid item xs={12}>
-                <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
+                <Stack direction="row" justifyContent="center" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
                     <Typography variant="h3">Power Prediction</Typography>
                 </Stack>
             </Grid>
